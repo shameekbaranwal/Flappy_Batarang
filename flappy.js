@@ -1,40 +1,60 @@
 let bird;
 let blocks = [];
-const maxLevel = 200;
+// const maxLevel = 200;
 let score;
 let birdImg;
 let bgImg;
 let pipe;
 let highestScore;
-let jumpSound;
+let pointSFX;
+let jumpSFX;
+let hitSFX;
+let gameOn;
 
-function preLoad() {
+function preload() {
+  birdImg = loadImage('images/bird.png');
+  bgImg = loadImage('images/bg.jpg');
+  pipeImg = loadImage('images/pipe.png');
+  launchImg = loadImage('images/launch.jpeg');
+  pointSFX = loadSound('sfx/sfx_point.wav');
+  jumpSFX = loadSound('sfx/sfx_jump.wav');
+  hitSFX = loadSound('sfx/sfx_hit.wav');
 }
 
 function setup() {
   createCanvas(500, 500);
-  birdImg = loadImage('images/bird.png');
-  bgImg = loadImage('images/bg.jpg');
-  pipeImg = loadImage('images/pipe.png');
+  fullscreen();
   highestScore = 0;
-  restart(); 
+  // restart(); 
   frameRate(30);
-  // noLoop();
-  text("Press Enter to begin", 120, 350);
+  image(launchImg, 0, 0, 500, 500);
+  console.log('bruh');
+  noLoop();
+  gameOn = false;
 }
 
 function keyPressed() {
-  if (key === ' ')
+  if (key === ' ' && gameOn) {
     bird.click();
-  if (key === 'r') {
-    restart();
+    jumpSFX.play();
+  }
+  if (key === 'r' || keyCode === ENTER) {
     // console.log("New Game");
+    restart();
     loop();
+    gameOn = true;
   }
 }
 
-function mousePressed() {
-  bird.click();
+function mouseClicked() {
+  if (gameOn) {
+    bird.click();
+    jumpSFX.play();
+  } else {
+    restart();
+    loop();
+    gameOn = true;
+  }
 }
 
 function restart() {
@@ -43,36 +63,40 @@ function restart() {
   for (let i = 0; i < 3; i++)
     blocks[i] = new Blocks(i);
   score = 0;
+  gameOn = true;
 }
 
 function draw() {
-  background(bgImg);
-  bird.update();
-  bird.hitBottom();
-  bird.hitTop();
-  bird.show();
-  for (let block of blocks) {
-    block.update();
-    block.showTop();
-    block.showBottom();
-    if (block.passed) {
-      score++;
-      block.passed = false;
-      block.runCheck = false;
-      // console.log("SCORE: "+score);
+  if (gameOn) {
+    background(bgImg);
+    bird.update();
+    bird.hitBottom();
+    bird.hitTop();
+    bird.show();
+    for (let block of blocks) {
+      block.update();
+      block.showTop();
+      block.showBottom();
+      if (block.passed) {
+        pointSFX.play();
+        score++;
+        block.passed = false;
+        block.runCheck = false;
+        // console.log("SCORE: "+score);
+      }
+      if (block.birdHit(bird)) {
+        hitSFX.play();
+        gameOver();
+        break;
+      }
+      if (block.offScreen()) {
+        blocks.shift();
+        let block = new Blocks(1);
+        blocks.push(block);
+      }
     }
-    if (block.birdHit(bird)) {
-      gameOver();
-      break;
-    }
-    if (block.offScreen()) {
-      blocks.shift();
-      let block = new Blocks(1);
-      blocks.push(block);
-    }
+    showScore();
   }
-  showScore();
-  // console.log(blocks.length);
 }
 
 function showScore() {
@@ -81,7 +105,7 @@ function showScore() {
   stroke(0);
   strokeWeight(3);
   textSize(30);
-  text(score, width-40, 40);
+  text(score, width - 40, 40);
   pop();
 }
 
@@ -99,4 +123,5 @@ function gameOver() {
   textSize(20);
   text("   Press R to restart", 150, 350);
   pop();
+  gameOn = false;
 }

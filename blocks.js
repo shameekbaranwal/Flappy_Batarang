@@ -31,7 +31,7 @@ class Blocks {
     update() {
         this.x += this.speed;
         if (this.runCheck)
-            this.passed = (bird.x - bird.r) > (this.x + this.w);
+            this.passed = (bird.x - bird.r) > (this.x - this.w);
     }
 
     birdHit(bird) {
