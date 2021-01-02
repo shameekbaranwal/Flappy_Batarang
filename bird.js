@@ -13,7 +13,11 @@ class Bird {
 
     show() {
         fill (0, 200, 0);
-        circle (this.x, this.y, this.r*2);
+        push();
+        translate(this.x, this.y);
+        circle (0, 0, this.r*2);
+        image(birdImg, -this.r, -this.r, this.r*2, this.r*2);
+        pop();
     }
 
     update() {
@@ -28,7 +32,6 @@ class Bird {
 
     hitBottom() {
         if (this.y >= height - this.r) {
-            // console.log("hit bottom");
             this.y = height - this.r - 1 ;
             // this.speed = -5;
         }
