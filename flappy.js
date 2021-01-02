@@ -20,6 +20,10 @@ function keyPressed() {
   }
 }
 
+function mousePressed() {
+  bird.click();
+}
+
 function restart() {
   bird = new Bird();
   frameRate(60);
