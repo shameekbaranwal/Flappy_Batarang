@@ -4,6 +4,7 @@ let blocks = [];
 let score;
 let birdImg;
 let bgImg;
+let tubeImg;
 let pipe;
 let highestScore;
 let pointSFX;
@@ -12,13 +13,14 @@ let hitSFX;
 let gameOn;
 
 function preload() {
-  birdImg = loadImage('images/bird.png');
-  bgImg = loadImage('images/bg.jpg');
-  pipeImg = loadImage('images/pipe.png');
-  launchImg = loadImage('images/launch.jpeg');
+  birdImg = loadImage('images/bat.jpg');
+  bgImg = loadImage('images/batbg6.jpg');
+  // pipeImg = loadImage('images/pipe.png');
+  launchImg = loadImage('images/batlaunch.jpeg');
   pointSFX = loadSound('sfx/sfx_point.wav');
   jumpSFX = loadSound('sfx/sfx_jump.wav');
   hitSFX = loadSound('sfx/sfx_hit.wav');
+  // tubeImg = loadImage('images/building1.png');
 }
 
 function setup() {
@@ -27,7 +29,7 @@ function setup() {
   highestScore = 0;
   // restart(); 
   frameRate(30);
-  image(launchImg, 0, 0, 500, 500);
+  image(launchImg, 0, 0, width, height);
   console.log('bruh');
   noLoop();
   gameOn = false;
@@ -68,7 +70,8 @@ function restart() {
 
 function draw() {
   if (gameOn) {
-    background(bgImg);
+    // background(bgImg);
+    image(bgImg, 0, 0, width, height + 10);
     bird.update();
     bird.hitBottom();
     bird.hitTop();

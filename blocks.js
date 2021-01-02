@@ -5,27 +5,59 @@ class Blocks {
         this.gapLocation = random(20 + this.gapSize, height - (20 + this.gapSize));
         this.top = this.gapLocation - this.gapSize / 2;
         this.bottom = this.gapLocation + this.gapSize / 2;
-        this.x = width + width/2 * i;
+        this.x = width + width / 2 * i;
         this.speed = -2;
-        this.w = 30
+        this.w = 35;
         this.passed = false;
         this.runCheck = true;
-        this.headHeight = 30;
-        this.headWidth = 6;
+        this.horizontalDivs = 5
+        this.windowSize = this.w / this.horizontalDivs;
+        this.windowGap = 12;
+        this.dist = this.windowSize * 2 + this.windowGap;
+        this.windowsTop = floor(this.top / this.dist);
+        this.windowsBottom = floor((height - this.bottom) / this.dist);
     }
 
     showTop() {
-        fill(0, 200, 0);
+        fill(0);
         rect(this.x, 0, this.w, this.top);
-        fill(0, 195, 0);
-        rect(this.x - this.headWidth/2, this.top - this.headHeight, this.w + this.headWidth, this.headHeight);
+        for (let i = 0; i < this.windowsTop; i++) {
+            fill(255, 255, 0);
+            rect(
+                this.x + this.windowSize,
+                this.windowGap + (this.windowGap + this.windowSize * 2) * i,
+                this.windowSize,
+                this.windowSize * 2
+            );
+            rect(
+                this.x + this.w - 2 * this.windowSize,
+                this.windowGap + (this.windowGap + this.windowSize * 2) * i,
+                this.windowSize,
+                this.windowSize * 2
+            );
+        }
+        // image(tubeImg, this.x, 0, this.w, this.top);
     }
 
     showBottom() {
-        fill(0, 200, 0);
+        fill(0);
         rect(this.x, this.bottom, this.w, height - this.bottom);
-        fill(0, 195, 0);
-        rect(this.x - this.headWidth/2, this.bottom, this.w + this.headWidth, this.headHeight);
+        for (let i = 0; i < this.windowsBottom; i++) {
+            fill(255, 255, 0);
+            rect(
+                this.x + this.windowSize,
+                this.bottom + this.windowGap + i * (this.windowGap + this.windowSize * 2),
+                this.windowSize,
+                this.windowSize * 2
+            );
+            rect(
+                this.x + this.windowSize * ((this.horizontalDivs + 1) / 2),
+                this.bottom + this.windowGap + i * (this.windowGap + this.windowSize * 2),
+                this.windowSize,
+                this.windowSize * 2
+            );
+        }
+        // image(tubeImg, this.x, this.bottom, this.w, height - this.bottom);
     }
 
     update() {
