@@ -3,7 +3,8 @@ class Bird {
     constructor() {
         this.x = 50;
         this.y = width / 2;
-        this.r = 15;
+        this.r1 = 20;
+        this.r2 = 12;
         this.gravity = 0.7;
         this.speed = 0;
         this.drag = 0.98;
@@ -16,10 +17,12 @@ class Bird {
         fill(0);
         push();
         translate(this.x, this.y);
+        angleMode(DEGREES);
+        rotate(frameCount * 8);
         stroke(0);
         strokeWeight(1);
-        ellipse(1, 0, this.r * 2 + 2, this.r * 2);
-        image(birdImg, -this.r, -this.r, this.r * 2 + 2, this.r * 2);
+        // ellipse(1, 0, this.r * 2 + 2, this.r * 2);
+        image(birdImg, -this.r1, -this.r2, this.r1 * 2 + 6, this.r2 * 2 + 8);
         pop();
     }
 
@@ -34,17 +37,20 @@ class Bird {
     }
 
     hitBottom() {
-        if (this.y >= height - this.r) {
-            this.y = height - this.r - 1;
+        if (this.y >= height - this.r2) {
+            this.y = height - this.r2 - 4;
+            gameOn = false;
+            gameOver();
+            hitSFX.play();
             // this.speed = -5;
         }
     }
 
 
     hitTop() {
-        if (this.y <= 0 + this.r) {
+        if (this.y <= 0 + this.r2) {
             this.speed = 5;
-            this.y = this.r + 10;
+            this.y = this.r2 + 10;
         }
     }
 }

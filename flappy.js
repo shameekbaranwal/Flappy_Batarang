@@ -12,16 +12,18 @@ let jumpSFX;
 let hitSFX;
 let gameOn;
 
+
 function preload() {
-  birdImg = loadImage('images/bat.jpg');
-  bgImg = loadImage('images/batbg6.jpg');
+  birdImg = loadImage('images/bat.png');
+  bgImg = loadImage('images/batbg.png');
   // pipeImg = loadImage('images/pipe.png');
-  launchImg = loadImage('images/batlaunch.jpeg');
+  launchImg = loadImage('images/batlaunch.png');
   pointSFX = loadSound('sfx/sfx_point.wav');
   jumpSFX = loadSound('sfx/sfx_jump.wav');
   hitSFX = loadSound('sfx/sfx_hit.wav');
   // tubeImg = loadImage('images/building1.png');
 }
+
 
 function setup() {
   createCanvas(500, 500);
@@ -30,44 +32,12 @@ function setup() {
   // restart(); 
   frameRate(30);
   image(launchImg, 0, 0, width, height);
-  console.log('bruh');
+  // console.log('bruh');
   noLoop();
   gameOn = false;
 }
 
-function keyPressed() {
-  if (key === ' ' && gameOn) {
-    bird.click();
-    jumpSFX.play();
-  }
-  if (key === 'r' || keyCode === ENTER) {
-    // console.log("New Game");
-    restart();
-    loop();
-    gameOn = true;
-  }
-}
-
-function mouseClicked() {
-  if (gameOn) {
-    bird.click();
-    jumpSFX.play();
-  } else {
-    restart();
-    loop();
-    gameOn = true;
-  }
-}
-
-function restart() {
-  bird = new Bird();
-  frameRate(60);
-  for (let i = 0; i < 3; i++)
-    blocks[i] = new Blocks(i);
-  score = 0;
-  gameOn = true;
-}
-
+//looping function
 function draw() {
   if (gameOn) {
     // background(bgImg);
@@ -102,6 +72,43 @@ function draw() {
   }
 }
 
+
+function keyPressed() {
+  if (key === ' ' && gameOn) {
+    bird.click();
+    jumpSFX.play();
+  }
+  if (key === 'r' || keyCode === ENTER) {
+    // console.log("New Game");
+    restart();
+    loop();
+    gameOn = true;
+  }
+}
+
+
+function mouseClicked() {
+  if (gameOn) {
+    bird.click();
+    jumpSFX.play();
+  } else {
+    restart();
+    loop();
+    gameOn = true;
+  }
+}
+
+
+function restart() {
+  bird = new Bird();
+  frameRate(60);
+  for (let i = 0; i < 3; i++)
+    blocks[i] = new Blocks(i);
+  score = 0;
+  gameOn = true;
+}
+
+
 function showScore() {
   push();
   fill(255);
@@ -111,6 +118,7 @@ function showScore() {
   text(score, width - 40, 40);
   pop();
 }
+
 
 function gameOver() {
   noLoop();
@@ -128,3 +136,4 @@ function gameOver() {
   pop();
   gameOn = false;
 }
+

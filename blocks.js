@@ -1,13 +1,13 @@
 class Blocks {
 
     constructor(i) {
-        this.gapSize = 100;
+        this.gapSize = 120;
         this.gapLocation = random(20 + this.gapSize, height - (20 + this.gapSize));
         this.top = this.gapLocation - this.gapSize / 2;
         this.bottom = this.gapLocation + this.gapSize / 2;
-        this.x = width + width / 2 * i;
+        this.x = 400 + 200 * i;
         this.speed = -2;
-        this.w = 35;
+        this.w = 40;
         this.passed = false;
         this.runCheck = true;
         this.horizontalDivs = 5
@@ -63,12 +63,12 @@ class Blocks {
     update() {
         this.x += this.speed;
         if (this.runCheck)
-            this.passed = (bird.x - bird.r) > (this.x - this.w);
+            this.passed = (bird.x - bird.r1) > (this.x - this.w);
     }
 
     birdHit(bird) {
-        if ((bird.x + bird.r) >= this.x && (bird.x - bird.r) <= (this.x + this.w)) {
-            if ((bird.y - bird.r) <= this.top || (bird.y + bird.r) >= this.bottom)
+        if ((bird.x + bird.r1) >= this.x && (bird.x - bird.r1) <= (this.x + this.w)) {
+            if ((bird.y - bird.r2) <= this.top || (bird.y + bird.r2) >= this.bottom)
                 return true;
         }
         return false;
