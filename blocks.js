@@ -16,10 +16,11 @@ class Blocks {
         this.dist = this.windowSize * 2 + this.windowGap;
         this.windowsTop = floor(this.top / this.dist);
         this.windowsBottom = floor((height - this.bottom) / this.dist);
+        this.colour = random(30, 60);
     }
 
     showTop() {
-        fill(0);
+        fill(this.colour);
         rect(this.x, 0, this.w, this.top);
         for (let i = 0; i < this.windowsTop; i++) {
             fill(255, 255, 0);
@@ -40,7 +41,7 @@ class Blocks {
     }
 
     showBottom() {
-        fill(0);
+        fill(this.colour);
         rect(this.x, this.bottom, this.w, height - this.bottom);
         for (let i = 0; i < this.windowsBottom; i++) {
             fill(255, 255, 0);
