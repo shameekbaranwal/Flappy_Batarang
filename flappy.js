@@ -43,8 +43,6 @@ function draw() {
     // background(bgImg);
     image(bgImg, 0, 0, width, height + 10);
     bird.update();
-    bird.hitBottom();
-    bird.hitTop();
     bird.show();
     for (let block of blocks) {
       block.update();
@@ -68,6 +66,8 @@ function draw() {
         blocks.push(block);
       }
     }
+    bird.hitBottom();
+    bird.hitTop();
     showScore();
   }
 }

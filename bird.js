@@ -39,7 +39,6 @@ class Bird {
     hitBottom() {
         if (this.y >= height - this.r2) {
             this.y = height - this.r2 - 4;
-            gameOn = false;
             gameOver();
             hitSFX.play();
             // this.speed = -5;
