@@ -26,7 +26,7 @@ function preload() {
 
 function setup() {
   createCanvas(500, 500);
-  fullscreen();
+  angleMode(DEGREES);
   highestScore = 0;
   frameRate(30);
   image(bgImg, 0, 0, width, height);
@@ -64,15 +64,15 @@ function draw() {
         block.runCheck = false;
         // console.log("SCORE: "+score);
       }
-      if (block.birdHit(bird)) {
-        hitSFX.play();
-        gameOver();
-        break;
-      }
       if (block.offScreen()) {
         blocks.shift();
         let block = new Blocks(1);
         blocks.push(block);
+      }
+      if (block.birdHit(bird)) {
+        hitSFX.play();
+        gameOver();
+        break;
       }
     }
     bird.hitBottom();

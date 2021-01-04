@@ -4,12 +4,13 @@ class Bird {
         this.x = 50;
         this.y = width / 2;
         this.r1 = 20;
-        this.r2 = 12;
+        this.r2 = 20;
         this.gravity = 0.7;
         this.speed = 0;
         this.drag = 0.98;
         this.lift = -8;
         this.speedLimit = 20;
+        this.angle = 0;
     }
 
     show() {
@@ -17,12 +18,15 @@ class Bird {
         fill(0);
         push();
         translate(this.x, this.y);
-        angleMode(DEGREES);
-        rotate(frameCount * 8);
-        stroke(0);
+        stroke(255);
         strokeWeight(1);
+        // rect(-this.r1, -this.r2, this.r1 * 2, this.r2 * 2);
+        push();
+        this.angle = (frameCount * 8) % 360;
+        rotate(this.angle);
         // ellipse(1, 0, this.r * 2 + 2, this.r * 2);
-        image(birdImg, -this.r1, -this.r2, this.r1 * 2 + 6, this.r2 * 2 + 8);
+        image(birdImg, -this.r1, -this.r2, this.r1 * 2, this.r2 * 2);
+        pop();
         pop();
     }
 
@@ -38,7 +42,7 @@ class Bird {
 
     hitBottom() {
         if (this.y >= height - this.r2) {
-            this.y = height - this.r2 - 4;
+            this.y = height - this.r2;
             gameOver();
             hitSFX.play();
             // this.speed = -5;
