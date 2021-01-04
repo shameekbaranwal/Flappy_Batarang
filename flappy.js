@@ -11,7 +11,7 @@ let pointSFX;
 let jumpSFX;
 let hitSFX;
 let gameOn;
-
+let gamePaused;
 
 function preload() {
   birdImg = loadImage('images/bat.png');
@@ -35,11 +35,12 @@ function setup() {
   // console.log('bruh');
   noLoop();
   gameOn = false;
+  gamePaused = false;
 }
 
 //looping function
 function draw() {
-  if (gameOn) {
+  if (gameOn && !gamePaused) {
     // background(bgImg);
     image(bgImg, 0, 0, width, height + 10);
     bird.update();
@@ -74,7 +75,7 @@ function draw() {
 
 
 function keyPressed() {
-  if (key === ' ' && gameOn) {
+  if (key === ' ' && gameOn && !gamePaused) {
     bird.click();
     jumpSFX.play();
   }
@@ -83,12 +84,32 @@ function keyPressed() {
     restart();
     loop();
     gameOn = true;
+    gamePaused = false;
+  }
+  if (key === 'p') {
+    if (!gamePaused && gameOn) {
+      gamePaused = true;
+      push();
+      textSize(40);
+      fill(255);
+      stroke(0);
+      strokeWeight(8);
+      text(`
+    Game Paused
+  Press P to resume
+   or R to restart`, 80, 140);
+      pop();
+      noLoop();
+    } else if (gamePaused && gameOn) {
+      loop();
+      gamePaused = false;
+    }
   }
 }
 
 
 function mouseClicked() {
-  if (gameOn) {
+  if (gameOn && !gamePaused) {
     bird.click();
     jumpSFX.play();
   } else {
@@ -136,4 +157,3 @@ function gameOver() {
   pop();
   gameOn = false;
 }
-
