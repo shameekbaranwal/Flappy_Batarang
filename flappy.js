@@ -17,7 +17,6 @@ let myFont;
 function preload() {
   birdImg = loadImage('images/bat.png');
   bgImg = loadImage('images/batbg.png');
-  launchImg = loadImage('images/batlaunch.png');
   pointSFX = loadSound('sfx/sfx_point.wav');
   jumpSFX = loadSound('sfx/sfx_jump.wav');
   hitSFX = loadSound('sfx/sfx_hit.wav');
