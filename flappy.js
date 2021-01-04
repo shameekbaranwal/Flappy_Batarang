@@ -12,16 +12,16 @@ let jumpSFX;
 let hitSFX;
 let gameOn;
 let gamePaused;
+let myFont;
 
 function preload() {
   birdImg = loadImage('images/bat.png');
   bgImg = loadImage('images/batbg.png');
-  // pipeImg = loadImage('images/pipe.png');
   launchImg = loadImage('images/batlaunch.png');
   pointSFX = loadSound('sfx/sfx_point.wav');
   jumpSFX = loadSound('sfx/sfx_jump.wav');
   hitSFX = loadSound('sfx/sfx_hit.wav');
-  // tubeImg = loadImage('images/building1.png');
+  myFont = loadFont('./font/flappy.TTF');
 }
 
 
@@ -29,9 +29,18 @@ function setup() {
   createCanvas(500, 500);
   fullscreen();
   highestScore = 0;
-  // restart(); 
   frameRate(30);
-  image(launchImg, 0, 0, width, height);
+  image(bgImg, 0, 0, width, height);
+  textFont(myFont);
+  push();
+  fill(255);
+  stroke(0);
+  strokeWeight(3);
+  textSize(50);
+  text("FLAPPY BATARANG", 45, 150);
+  textSize(20);
+  text("press Enter to play", 130, 350);
+  pop();
   // console.log('bruh');
   noLoop();
   gameOn = false;
@@ -90,14 +99,15 @@ function keyPressed() {
     if (!gamePaused && gameOn) {
       gamePaused = true;
       push();
-      textSize(40);
+      textSize(35);
       fill(255);
       stroke(0);
-      strokeWeight(8);
+      strokeWeight(3);
       text(`
-    Game Paused
+        Paused
+
   Press P to resume
-   or R to restart`, 80, 140);
+   or R to restart`, 50, 175);
       pop();
       noLoop();
     } else if (gamePaused && gameOn) {
@@ -151,9 +161,9 @@ function gameOver() {
   highestScore = max(highestScore, score);
   text(`
   Score : ${score}
-  Highest : ${highestScore}`, 100, 150);
-  textSize(20);
-  text("   Press R to restart", 150, 350);
+  Highest : ${highestScore}`, 55, 150);
+  textSize(35);
+  text("Press R to restart", 70, 350);
   pop();
   gameOn = false;
 }
